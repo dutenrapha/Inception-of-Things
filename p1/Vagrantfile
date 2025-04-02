@@ -1,0 +1,36 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.synced_folder "shared", "/vagrant_shared"
+
+  config.vm.define "rdutenkeS" do |server|
+    server.vm.hostname = "rdutenkeS"
+    server.vm.network "private_network", ip: "192.168.56.110"
+
+    server.vm.provider "virtualbox" do |vb|
+      vb.name = "rdutenkeS"
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.gui = false
+      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
+    end
+
+    server.vm.provision "shell", path: "scripts/install_server.sh"
+  end
+
+  config.vm.define "rdutenkeSW" do |worker|
+    worker.vm.hostname = "rdutenkeSW"
+    worker.vm.network "private_network", ip: "192.168.56.111"
+
+    worker.vm.provider "virtualbox" do |vb|
+      vb.name = "rdutenkeSW"
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.gui = false
+      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
+    end
+
+    worker.vm.provision "shell", path: "scripts/install_worker.sh"
+  end
+end
