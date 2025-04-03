@@ -1,0 +1,20 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "alvistack/ubuntu-24.04"
+  config.vm.synced_folder "conf", "/conf"
+
+  config.vm.define "rdutenkeS" do |server|
+    server.vm.hostname = "rdutenkeS"
+    server.vm.network "private_network", ip: "192.168.56.110"
+
+    server.vm.provider "virtualbox" do |vb|
+      vb.name = "rdutenkeS"
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.gui = false
+      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
+    end
+
+    server.vm.provision "shell", path: "scripts/deploy_apps.sh"
+  end
+end
