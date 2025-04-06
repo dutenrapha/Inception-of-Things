@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: playground-app
+  namespace: argo-cd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/angelasoler/asoler_cd_xp'
+    targetRevision: HEAD
+    path: manifests
+  destination:
+    server: 'https://kubernetes.default.svc' #tells Argo CD to deploy a current Kubernetes cluster
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true #Argo CD will remove resources that are no longer defined in Git
+      selfHeal: true #ensures the state in the cluster matches the desired configuration
