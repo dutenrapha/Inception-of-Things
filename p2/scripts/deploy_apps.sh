@@ -15,6 +15,7 @@ done
 
 echo "[+] K3s is ready. Applying the cluster configuration..."
 kubectl apply -f /conf/apps.yaml
+kubectl apply -f /conf/ingress.yaml
 
 if [ $? -eq 0 ]; then
   echo "[+] Manifests applied successfully!"

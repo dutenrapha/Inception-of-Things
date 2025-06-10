@@ -15,11 +15,53 @@ spec:
     spec:
       containers:
       - name: app1
-        image: hashicorp/http-echo
-        args:
-          - "-text=Hello from App1!"
+        image: nginx:latest
         ports:
-          - containerPort: 5678
+          - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: app1-html
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app1-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Kubernetes - App1</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          background-color: #326CE5;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+        }
+        .container {
+          text-align: center;
+        }
+        h1 {
+          font-size: 3em;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Kubernetes</h1>
+        <h2>Welcome to App1</h2>
+      </div>
+    </body>
+    </html>
 ---
 apiVersion: v1
 kind: Service
@@ -31,7 +73,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 5678
+      targetPort: 80
   type: ClusterIP
 ---
 apiVersion: apps/v1
@@ -50,11 +92,53 @@ spec:
     spec:
       containers:
       - name: app2
-        image: hashicorp/http-echo
-        args:
-          - "-text=Hello from App2!"
+        image: nginx:latest
         ports:
-          - containerPort: 5678
+          - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: app2-html
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app2-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Kubernetes - App2</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          background-color: #326CE5;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+        }
+        .container {
+          text-align: center;
+        }
+        h1 {
+          font-size: 3em;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Kubernetes</h1>
+        <h2>Welcome to App2</h2>
+      </div>
+    </body>
+    </html>
 ---
 apiVersion: v1
 kind: Service
@@ -66,7 +150,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 5678
+      targetPort: 80
   type: ClusterIP
 ---
 apiVersion: apps/v1
@@ -85,11 +169,53 @@ spec:
     spec:
       containers:
       - name: app3
-        image: hashicorp/http-echo
-        args:
-          - "-text=Hello from App3!"
+        image: nginx:latest
         ports:
-          - containerPort: 5678
+          - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: app3-html
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app3-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Kubernetes - App3</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          background-color: #326CE5;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+        }
+        .container {
+          text-align: center;
+        }
+        h1 {
+          font-size: 3em;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Kubernetes</h1>
+        <h2>Welcome to App3</h2>
+      </div>
+    </body>
+    </html>
 ---
 apiVersion: v1
 kind: Service
@@ -101,5 +227,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 5678
+      targetPort: 80
   type: ClusterIP
