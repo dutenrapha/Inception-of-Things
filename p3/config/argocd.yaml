@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/angelasoler/asoler_cd_xp'
     targetRevision: HEAD
-    path: manifests
+    path: manifest
   destination:
     server: 'https://kubernetes.default.svc' #tells Argo CD to deploy a current Kubernetes cluster
     namespace: dev
